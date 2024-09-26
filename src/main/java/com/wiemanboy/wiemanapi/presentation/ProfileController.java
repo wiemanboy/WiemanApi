@@ -2,6 +2,7 @@ package com.wiemanboy.wiemanapi.presentation;
 
 import com.wiemanboy.wiemanapi.application.ProfileService;
 import com.wiemanboy.wiemanapi.presentation.dto.response.ProfileDto;
+import com.wiemanboy.wiemanapi.presentation.dto.response.ProfileLocaleDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ public class ProfileController {
     }
 
     @GetMapping("/{name}/{locale}")
-    public ProfileDto getProfileByName(@PathVariable String name, @PathVariable String locale) {
-        return ProfileDto.from(profileService.getProfileByName(name));
+    public ProfileLocaleDto getProfileByName(@PathVariable String name, @PathVariable String locale) {
+        return ProfileLocaleDto.from(profileService.getProfileByName(name), locale);
     }
 }

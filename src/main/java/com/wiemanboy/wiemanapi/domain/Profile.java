@@ -45,6 +45,13 @@ public class Profile {
         this.descriptions.add(description);
     }
 
+    public Description getDescription(String locale) {
+        return descriptions.stream()
+                .filter(description -> description.getLocale().equals(locale))
+                .findFirst()
+                .orElse(null);
+    }
+
     public void removeDescription(Description description) {
         this.descriptions.remove(description);
     }
@@ -59,6 +66,12 @@ public class Profile {
 
     public void addSkillSection(SkillSection skillSection) {
         skillSections.add(skillSection);
+    }
+
+    public List<SkillSection> getSkillSections(String locale) {
+        return skillSections.stream()
+                .filter(skillSection -> skillSection.getLocale().equals(locale))
+                .toList();
     }
 
     public void removeSkillSection(SkillSection skillSection) {

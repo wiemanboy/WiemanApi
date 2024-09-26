@@ -19,6 +19,16 @@ class ProfileTest {
     }
 
     @Test
+    void testGetDescription() {
+        Profile profile = (new ProfileBuilder()).build();
+        Description description = (new DescriptionBuilder()).setLocale("en").build();
+        profile.addDescription(description);
+        profile.addDescription((new DescriptionBuilder()).setLocale("nl").build());
+
+        assertEquals(description, profile.getDescription("en"));
+    }
+
+    @Test
     void testRemoveDescription() {
         Profile profile = (new ProfileBuilder()).build();
         Description description = (new DescriptionBuilder()).build();
@@ -50,6 +60,16 @@ class ProfileTest {
         SkillSection skillSection = (new SkillSectionBuilder()).build();
         profile.addSkillSection(skillSection);
         assertEquals(1, profile.getSkillSections().size());
+    }
+
+    @Test
+    void testGetSkillSections() {
+        Profile profile = (new ProfileBuilder()).build();
+        SkillSection skillSection = (new SkillSectionBuilder()).setLocale("en").build();
+        profile.addSkillSection(skillSection);
+        profile.addSkillSection((new SkillSectionBuilder()).setLocale("nl").build());
+
+        assertEquals(skillSection, profile.getSkillSections("en").getFirst());
     }
 
     @Test
