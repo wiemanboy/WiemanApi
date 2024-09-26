@@ -27,4 +27,20 @@ public class ProfileService {
         Profile profile = new Profile(firstName, lastName, username);
         return profileRepository.save(profile);
     }
+
+    public Profile patchProfile(String id, String firstName, String lastName, String username) {
+        Profile profile = profileRepository.findById(id).orElseThrow();
+
+        if (firstName != null) {
+            profile.setFirstName(firstName);
+        }
+        if (lastName != null) {
+            profile.setLastName(lastName);
+        }
+        if (username != null) {
+            profile.setUsername(username);
+        }
+
+        return profileRepository.save(profile);
+    }
 }

@@ -65,4 +65,16 @@ class ProfileServiceTest {
 
         assertThrows(RuntimeException.class, () -> profileService.getProfileByName(name));
     }
+
+    @Test
+    void testPatchProfile() {
+        Profile profile = new Profile("John", "Doe", "johndoe");
+        when(profileRepository.findById("")).thenReturn(Optional.of(profile));
+        when(profileRepository.save(any(Profile.class))).thenReturn(profile);
+
+        Profile result = profileService.patchProfile("", "Jane", null, null);
+        assertEquals("Jane", result.getFirstName());
+        assertEquals("Doe", result.getLastName());
+        assertEquals("johndoe", result.getUsername());
+    }
 }
