@@ -1,24 +1,20 @@
 package com.wiemanboy.wiemanapi.domain;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
+@EqualsAndHashCode
 @Document
 public class Profile {
-    private final List<Description> descriptions = new ArrayList<>();
-    private final List<Social> socials = new ArrayList<>();
-    private final List<SkillSection> skillSections = new ArrayList<>();
-    @Id
-    @GeneratedValue
-    private UUID id;
+    private List<Description> descriptions = new ArrayList<>();
+    private List<Social> socials = new ArrayList<>();
+    private List<SkillSection> skillSections = new ArrayList<>();
     @Setter
     private String firstName;
     @Setter
@@ -27,6 +23,18 @@ public class Profile {
     private String username;
 
     public Profile(String firstName, String lastName, String username) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+    }
+
+    protected Profile() {
+    }
+
+    protected Profile(List<Description> descriptions, List<Social> socials, List<SkillSection> skillSections, String firstName, String lastName, String username) {
+        this.descriptions = descriptions;
+        this.socials = socials;
+        this.skillSections = skillSections;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
