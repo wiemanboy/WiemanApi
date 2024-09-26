@@ -2,6 +2,7 @@ package com.wiemanboy.wiemanapi.application;
 
 import com.wiemanboy.wiemanapi.data.ProfileRepository;
 import com.wiemanboy.wiemanapi.domain.Profile;
+import com.wiemanboy.wiemanapi.domain.exceptions.ProfileNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +17,11 @@ public class ProfileService {
     }
 
     public Profile getProfile(String id) {
-        return profileRepository.findById(id).orElseThrow();
+        return profileRepository.findById(id).orElseThrow(() -> new ProfileNotFoundException(id, null));
     }
 
     public Profile getProfileByName(String name) {
-        return profileRepository.findByFullNameOrUsername(name).orElseThrow();
+        return profileRepository.findByFullNameOrUsername(name).orElseThrow(() -> new ProfileNotFoundException(null, name));
     }
 
     public Profile createProfile(String firstName, String lastName, String username) {
@@ -29,7 +30,7 @@ public class ProfileService {
     }
 
     public Profile patchProfile(String id, String firstName, String lastName, String username) {
-        Profile profile = profileRepository.findById(id).orElseThrow();
+        Profile profile = profileRepository.findById(id).orElseThrow(() -> new ProfileNotFoundException(id, null));
 
         if (firstName != null) {
             profile.setFirstName(firstName);
