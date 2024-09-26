@@ -6,10 +6,9 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface ProfileRepository extends MongoRepository<Profile, UUID> {
+public interface ProfileRepository extends MongoRepository<Profile, String> {
 
     /**
      * <div>Find a profile by full name (no space) or username ignoring case</div>

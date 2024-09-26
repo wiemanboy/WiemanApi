@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -26,11 +25,10 @@ class ProfileServiceTest {
 
     @Test
     void testGetProfile() {
-        UUID id = UUID.randomUUID();
         Profile profile = new Profile("John", "Doe", "johndoe");
-        when(profileRepository.findById(id)).thenReturn(Optional.of(profile));
+        when(profileRepository.findById("")).thenReturn(Optional.of(profile));
 
-        Profile result = profileService.getProfile(id);
+        Profile result = profileService.getProfile("");
         assertEquals(profile, result);
     }
 
@@ -55,10 +53,9 @@ class ProfileServiceTest {
 
     @Test
     void testGetProfileNotFound() {
-        UUID id = UUID.randomUUID();
-        when(profileRepository.findById(id)).thenReturn(Optional.empty());
+        when(profileRepository.findById("")).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> profileService.getProfile(id));
+        assertThrows(RuntimeException.class, () -> profileService.getProfile(""));
     }
 
     @Test

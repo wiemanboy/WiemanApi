@@ -12,6 +12,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Document
 public class Profile {
+    private String id;
     private List<Description> descriptions = new ArrayList<>();
     private List<Social> socials = new ArrayList<>();
     private List<SkillSection> skillSections = new ArrayList<>();
