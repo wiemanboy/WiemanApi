@@ -19,4 +19,4 @@ COPY --from=extract snapshot-dependencies/ ./
 COPY --from=extract spring-boot-loader/ ./
 COPY --from=extract application/ ./
 
-ENTRYPOINT ["java", "org.springframework.boot.loader.launch.JarLauncher"]
+ENTRYPOINT ["/read_secrets.sh", "java", "org.springframework.boot.loader.launch.JarLauncher"]
