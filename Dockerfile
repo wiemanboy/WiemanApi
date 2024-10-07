@@ -19,4 +19,9 @@ COPY --from=extract snapshot-dependencies/ ./
 COPY --from=extract spring-boot-loader/ ./
 COPY --from=extract application/ ./
 
+COPY read_secrets.sh /read_secrets.sh
+RUN chmod +x /read_secrets.sh
+
+EXPOSE 8080
+
 ENTRYPOINT ["/read_secrets.sh", "java", "org.springframework.boot.loader.launch.JarLauncher"]
