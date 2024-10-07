@@ -1,4 +1,16 @@
 services:
+  wiemanapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      MONGO_USER: admin
+      MONGO_PASSWORD: admin
+      MONGO_DB: dev_db
+      SPRING_DATA_MONGODB_URI: mongodb://admin:admin@mongo:27017/dev_db
+
   mongo:
     image: mongo:latest
     environment:
