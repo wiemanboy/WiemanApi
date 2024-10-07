@@ -15,7 +15,7 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
-    @GetMapping("/test")
+    @GetMapping("/test/")
     public String getTest(@CookieValue(value = "token") String testCookie) {
         return "Cookie value: " + testCookie;
     }
