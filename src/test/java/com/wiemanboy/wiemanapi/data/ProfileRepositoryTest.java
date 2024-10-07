@@ -3,6 +3,7 @@ package com.wiemanboy.wiemanapi.data;
 import com.wiemanboy.wiemanapi.builders.ProfileBuilder;
 import com.wiemanboy.wiemanapi.domain.Profile;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+@EnabledIfEnvironmentVariable(named = "FUNCTIONAL_TESTING", matches = "true")
 @DataMongoTest
 class ProfileRepositoryTest {
     @Autowired
@@ -19,7 +21,6 @@ class ProfileRepositoryTest {
     void setUp() {
         profileRepository.deleteAll();
     }
-
 
     @ParameterizedTest
     @CsvSource({
