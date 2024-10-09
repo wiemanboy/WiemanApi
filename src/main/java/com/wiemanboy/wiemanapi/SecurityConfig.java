@@ -15,13 +15,13 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/api/profiles/actuator/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/services/profiles/actuator/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/profiles/{id}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/profiles/{name}/{locale}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2Login -> oauth2Login
-                        .defaultSuccessUrl("/api/profiles/docs/")
+                        .defaultSuccessUrl("/services/profiles/docs/")
                         .failureUrl("/")
                 );
         return http.build();
