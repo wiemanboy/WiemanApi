@@ -18,8 +18,8 @@ public class TestSecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-        return mock(SecurityFilterChain.class);
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll()).build();
     }
 
     @Bean
