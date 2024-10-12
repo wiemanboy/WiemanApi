@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.wiemanboy</groupId>
     <artifactId>WiemanApi</artifactId>
-    <version>0.0.1</version>
+    <version>0.1.0</version>
     <name>WiemanApi</name>
     <description>WiemanApi</description>
     <url/>
@@ -66,6 +66,26 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.okta.spring</groupId>
+            <artifactId>okta-spring-boot-starter</artifactId>
+            <version>3.0.7</version>
+        </dependency>
+
     </dependencies>
 
     <build>
