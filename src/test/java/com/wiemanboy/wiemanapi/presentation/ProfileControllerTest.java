@@ -1,6 +1,8 @@
 package com.wiemanboy.wiemanapi.presentation;
 
+import com.wiemanboy.wiemanapi.WiemanApiApplication;
 import com.wiemanboy.wiemanapi.builders.ProfileBuilder;
+import com.wiemanboy.wiemanapi.config.TestSecurityConfig;
 import com.wiemanboy.wiemanapi.data.ProfileRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,7 @@ import java.util.Optional;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@SpringBootTest(classes = {TestSecurityConfig.class, WiemanApiApplication.class})
 @AutoConfigureMockMvc
 public class ProfileControllerTest {
 
