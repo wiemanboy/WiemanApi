@@ -26,6 +26,7 @@ jobs:
       - name: Run tests
         run: mvn test
         env:
+          FUNCTIONAL_TEST: false
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
           AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
           "okta.oauth2.issuer": https://${{ secrets.OKTA_OAUTH2_ISSUER }}/
