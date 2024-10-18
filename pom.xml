@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.wiemanboy</groupId>
     <artifactId>WiemanApi</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <name>WiemanApi</name>
     <description>WiemanApi</description>
     <url/>
