@@ -6,10 +6,10 @@ import java.util.List;
 
 public record SkillDto(
         String name,
-        String level
+        int level
 ) {
     public static SkillDto from(Skill skill) {
-        return new SkillDto(skill.getName(), skill.getName());
+        return new SkillDto(skill.getName(), skill.getLevel().getValue());
     }
 
     public static List<SkillDto> from(List<Skill> skills) {
