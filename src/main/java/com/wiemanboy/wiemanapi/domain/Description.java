@@ -1,10 +1,12 @@
 package com.wiemanboy.wiemanapi.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
+@Builder
 public class Description {
     private String locale;
     private String title;
