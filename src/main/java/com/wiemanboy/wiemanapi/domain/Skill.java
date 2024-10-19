@@ -9,10 +9,11 @@ import lombok.Setter;
 @Builder
 public class Skill {
     private String name;
-    private String level;
+    private SkillLevel level;
 
-    public Skill(String name, String level) {
+    public Skill(String name, SkillLevel level) {
         this.name = name;
         this.level = level;
     }
+
 }

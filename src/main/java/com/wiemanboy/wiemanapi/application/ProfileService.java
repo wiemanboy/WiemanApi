@@ -55,7 +55,7 @@ public class ProfileService {
                                         .map(
                                                 skillDto -> Skill.builder()
                                                         .name(skillDto.name())
-                                                        .level(skillDto.level())
+                                                        .level(SkillLevel.of(skillDto.level()))
                                                         .build()
                                         ).toList()
                                 ).build(
@@ -107,7 +107,7 @@ public class ProfileService {
                                             .map(
                                                     skillDto -> Skill.builder()
                                                             .name(skillDto.name())
-                                                            .level(skillDto.level())
+                                                            .level(SkillLevel.of(skillDto.level()))
                                                             .build()
                                             ).toList()
                                     ).build(
