@@ -4,6 +4,8 @@ import com.wiemanboy.wiemanapi.domain.SkillSection;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 @Setter
 @Accessors(chain = true)
 public class SkillSectionBuilder {
@@ -11,6 +13,6 @@ public class SkillSectionBuilder {
     private String title = "Title";
 
     public SkillSection build() {
-        return new SkillSection(locale, title);
+        return new SkillSection(locale, title, List.of());
     }
 }

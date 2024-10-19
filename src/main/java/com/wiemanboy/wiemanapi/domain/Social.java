@@ -1,5 +1,6 @@
 package com.wiemanboy.wiemanapi.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +8,7 @@ import java.net.URI;
 
 @Getter
 @Setter
+@Builder
 public class Social {
     private String username;
     private String platform;

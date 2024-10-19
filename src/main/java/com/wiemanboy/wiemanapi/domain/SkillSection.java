@@ -1,29 +1,24 @@
 package com.wiemanboy.wiemanapi.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
 @Getter
+@Builder
 public class SkillSection {
-    @Setter
     private String locale;
-    @Setter
     private String title;
+    @Builder.Default
     List<Skill> skills = new ArrayList<>();
 
-    public SkillSection(String locale, String title) {
+    public SkillSection(String locale, String title, List<Skill> skills) {
         this.locale = locale;
         this.title = title;
-    }
-
-    public void addSkill(Skill skill) {
-        this.skills.add(skill);
-    }
-
-    public void removeSkill(Skill skill) {
-        this.skills.remove(skill);
+        this.skills = skills;
     }
 }
