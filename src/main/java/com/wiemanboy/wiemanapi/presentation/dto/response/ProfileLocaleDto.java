@@ -10,7 +10,7 @@ public record ProfileLocaleDto(
         String firstName,
         String lastName,
         String username,
-        Description descriptions,
+        Description description,
         List<SkillSectionDto> skillSections,
         List<SocialDto> socials
 ) {
@@ -21,7 +21,7 @@ public record ProfileLocaleDto(
                 profile.getLastName(),
                 profile.getUsername(),
                 profile.getDescription(locale),
-                SkillSectionDto.from(profile.getSkillSections()),
+                SkillSectionDto.from(profile.getSkillSections(locale)),
                 SocialDto.from(profile.getSocials())
         );
     }
