@@ -44,6 +44,7 @@ public class ProfileService {
                 ).toList(),
                 socialDtos.stream().map(
                         socialDto -> Social.builder()
+                                .username(socialDto.username())
                                 .platform(socialDto.platform())
                                 .url(URI.create(socialDto.url()))
                                 .build()
@@ -51,6 +52,7 @@ public class ProfileService {
                 skillSectionDtos.stream().map(
                         skillSectionDto -> SkillSection.builder()
                                 .title(skillSectionDto.title())
+                                .locale(skillSectionDto.locale())
                                 .skills(skillSectionDto.skills().stream()
                                         .map(
                                                 skillDto -> Skill.builder()
@@ -92,6 +94,7 @@ public class ProfileService {
             profile.setSocials(
                     socialDtos.stream().map(
                             socialDto -> Social.builder()
+                                    .username(socialDto.username())
                                     .platform(socialDto.platform())
                                     .url(URI.create(socialDto.url()))
                                     .build()
@@ -103,6 +106,7 @@ public class ProfileService {
                     skillSectionDtos.stream().map(
                             skillSectionDto -> SkillSection.builder()
                                     .title(skillSectionDto.title())
+                                    .locale(skillSectionDto.locale())
                                     .skills(skillSectionDto.skills().stream()
                                             .map(
                                                     skillDto -> Skill.builder()
