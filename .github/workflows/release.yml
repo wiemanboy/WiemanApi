@@ -1,15 +1,10 @@
-name: Create Docker image and release
+name: Release
 
 on:
   push:
     branches:
       - master
       - release/*
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version of the application'
-        required: false
 
 jobs:
   build:
@@ -21,17 +16,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set version
-        id: set-version
-        run: echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Auth GitHub CLI
+        run: echo "GITHUB_TOKEN=${{steps.app-token.outputs.token}}" >> $GITHUB_ENV
 
       - name: Install xmllint
         run: |
           sudo apt-get update
           sudo apt-get install -y libxml2-utils
 
-      - name: Extract version from pom.xml
-        if: github.event.inputs.version == ''
+      - name: Get Version
         id: extract-version
         run: |
           VERSION=$(xmllint --xpath 'string(/*[local-name()="project"]/*[local-name()="version"])' pom.xml)
@@ -57,9 +56,13 @@ jobs:
             ${{ github.ref == 'refs/heads/master' && format('{0}/{1}:latest', secrets.DOCKER_HUB_USERNAME, vars.DOCKER_IMAGE_NAME) || '' }}
 
       - name: Create release
-        uses: marvinpinto/action-automatic-releases@latest
+        uses: softprops/action-gh-release@v2
         with:
-          repo_token: "${{ secrets.TOKEN }}"
-          automatic_release_tag: ${{ env.VERSION }}
-          prerelease: ${{ github.ref != 'refs/heads/master' }}
-          title: "${{ github.event.repository.name }} v${{ env.VERSION }}"
+          name: ${{ github.event.repository.name }} v${{ env.VERSION }}
+          tag_name: ${{ env.VERSION }}
+          body: |
+            [> DockerHub](https://hub.docker.com/r/${{ secrets.DOCKER_HUB_USERNAME }}/${{ vars.DOCKER_IMAGE_NAME }}/tags?name=${{ env.VERSION }})
+            
+            ```bash
+            docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/${{ vars.DOCKER_IMAGE_NAME }}:${{ env.VERSION }}
+            ```

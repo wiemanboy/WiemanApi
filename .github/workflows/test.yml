@@ -1,4 +1,4 @@
-name: Run tests
+name: Test
 
 on:
   pull_request:
@@ -27,3 +27,51 @@ jobs:
         run: mvn test
         env:
           FUNCTIONAL_TESTING: false
+
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Auth GitHub CLI
+        run: echo "GH_TOKEN=${{steps.app-token.outputs.token}}" >> $GITHUB_ENV
+
+      - name: Install xmllint
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-utils
+
+      - name: Get Version
+        id: extract-version
+        run: |
+          VERSION=$(xmllint --xpath 'string(/*[local-name()="project"]/*[local-name()="version"])' pom.xml)
+          echo "VERSION=${VERSION}" >> $GITHUB_ENV
+
+      - name: Check Tag
+        run: |
+          TAG_EXISTS=$(gh release list --json tagName --jq '.[] | select(.tagName == "${{ env.VERSION }}") | length')
+          if [ "$TAG_EXISTS" -gt 0 ]; then
+            echo "Tag ${VERSION} already exists. Blocking the PR."
+            echo "BLOCK_PR=true" >> $GITHUB_ENV
+          else
+            echo "Tag ${VERSION} does not exist."
+            echo "BLOCK_PR=false" >> $GITHUB_ENV
+          fi
+
+      - name: Block PR
+        if: env.BLOCK_PR == 'true'
+        run: |
+          existing_reviews=$(gh pr view ${{ github.event.pull_request.number }} --json reviews --jq '.reviews[] | select(.body | contains("Version `${{ env.VERSION }}` already exists"))')
+
+          if [[ -n "$existing_reviews" ]]; then
+            echo "A similar review already exists. Skipping the review request."
+          else
+            gh pr review ${{ github.event.pull_request.number }} --request-changes --body "Version \`${{ env.VERSION }}\` already exists; this will overwrite the existing release. If this is a mistake, please bump the version in the \`pom.xml\`."
+          fi
