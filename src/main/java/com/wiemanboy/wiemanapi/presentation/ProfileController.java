@@ -1,10 +1,12 @@
 package com.wiemanboy.wiemanapi.presentation;
 
 import com.wiemanboy.wiemanapi.application.ProfileService;
+import com.wiemanboy.wiemanapi.domain.Profile;
 import com.wiemanboy.wiemanapi.presentation.dto.request.CreateProfileDto;
 import com.wiemanboy.wiemanapi.presentation.dto.response.ProfileDto;
 import com.wiemanboy.wiemanapi.presentation.dto.response.ProfileLocaleDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,6 +27,17 @@ public class ProfileController {
     @GetMapping("/{name}/{locale}")
     public ProfileLocaleDto getProfileByName(@PathVariable String name, @PathVariable String locale) {
         return ProfileLocaleDto.from(profileService.getProfileByName(name), locale);
+    }
+
+    @GetMapping(value = "/{name}/{locale}", produces = MediaType.TEXT_MARKDOWN_VALUE)
+    public String getProfileMarkdown(@PathVariable String name, @PathVariable String locale) {
+        Profile profile = profileService.getProfileByName(name);
+
+        return Profile.markdownBuilder()
+                .setUsername(profile.getUsername())
+                .setDescription(profile.getDescription(locale).getContent())
+                .setSkillSections(profile.getSkillSections(locale))
+                .build();
     }
 
     @PostMapping("/")

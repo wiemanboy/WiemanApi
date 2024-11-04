@@ -1,5 +1,6 @@
 package com.wiemanboy.wiemanapi.domain;
 
+import com.wiemanboy.wiemanapi.domain.builders.ProfileMarkdownBuilder;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -59,5 +60,9 @@ public class Profile {
         return skillSections.stream()
                 .filter(skillSection -> skillSection.getLocale().equals(locale))
                 .toList();
+    }
+
+    public static ProfileMarkdownBuilder markdownBuilder() {
+        return new ProfileMarkdownBuilder();
     }
 }
